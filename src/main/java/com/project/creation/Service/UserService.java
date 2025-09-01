@@ -65,26 +65,5 @@ public class UserService{
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
     }
 
-    public ResponseEntity<String> CustomerToAgent(Long CustomerId) {
-        User user = userrepo.findById(CustomerId).orElseThrow(() -> new RuntimeException("User not found"));
-        if("ROLE_CUSTOMER".equals(user.getRole())) {
-            user.setRole("ROLE_AGENT");
-            userrepo.save(user);
-            return ResponseEntity.ok("User role updated to AGENT");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User is not a CUSTOMER");
-        }
-    }
-
-    public ResponseEntity<String> AgentToAdmin(Long AgentId){
-        User agent = userrepo.findById(AgentId).orElseThrow(() -> new RuntimeException("User not found"));
-        if("ROLE_AGENT".equals(agent.getRole())){
-            agent.setRole("ROLE_ADMIN");
-            userrepo.save(agent);
-        } else {
-            throw new RuntimeException("User is not an AGENT");
-        }
-
-        return ResponseEntity.ok("Agent updated to ADMIN");
-    }
+    
 }

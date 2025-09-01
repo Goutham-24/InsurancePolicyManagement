@@ -1,6 +1,5 @@
 package com.project.creation.Model;
-
-import java.sql.Date;
+import java.time.LocalDate;
 
 import com.project.creation.Enum.PolicyStatus;
 
@@ -29,8 +28,8 @@ public class Policy {
 
     private String policyName;
     private Double premiumAmount;
-    private Date validFrom;
-    private Date validTo;
+    private LocalDate validFrom;
+    private LocalDate validTo;
 
     @Enumerated(EnumType.STRING) 
     private PolicyStatus status;

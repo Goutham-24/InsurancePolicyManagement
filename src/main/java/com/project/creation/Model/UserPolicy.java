@@ -30,11 +30,11 @@ public class UserPolicy {
     private Long userPolicyId;
 
     @ManyToOne
-    @JoinColumn(name = "policy_owner")
+    @JoinColumn(name = "policy_owner",nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "policy_taken")
+    @JoinColumn(name = "policy_taken",nullable = false)
     private Policy policy;
 
     private Date purchaseDate;

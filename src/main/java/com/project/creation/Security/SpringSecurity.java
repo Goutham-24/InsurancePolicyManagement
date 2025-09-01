@@ -19,9 +19,10 @@ public class SpringSecurity {
 public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/Authentication/signup","/Authentication/login").permitAll()
-            .requestMatchers("/mainController/getUserName").hasAuthority("ROLE_CUSTOMER")
-            .requestMatchers("/AdminAccess-CustomerToAgent/{CustomerId}","/AdminAccess-AgentToAdmin/{AgentId}").hasAuthority("ROLE_ADMIN")
+            .requestMatchers("/Authentication/**").permitAll()
+            .requestMatchers("/CustomerAccess/**").hasAuthority("ROLE_CUSTOMER")
+            .requestMatchers("/AgentAccess/**").hasAuthority("ROLE_AGENT")
+            .requestMatchers("/AdminAccess/**").hasAuthority("ROLE_ADMIN")
             .anyRequest().authenticated()
         )
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // <--- disable sessions
