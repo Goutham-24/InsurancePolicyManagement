@@ -30,6 +30,7 @@ public class Policy {
     private Double premiumAmount;
     private LocalDate validFrom;
     private LocalDate validTo;
+    private Integer userPolicyValidity;
 
     @Enumerated(EnumType.STRING) 
     private PolicyStatus status;

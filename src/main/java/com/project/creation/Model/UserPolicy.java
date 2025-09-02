@@ -1,6 +1,5 @@
 package com.project.creation.Model;
-
-import java.sql.Date;
+import java.time.LocalDate;
 
 import com.project.creation.Enum.PolicyStatus;
 
@@ -37,8 +36,8 @@ public class UserPolicy {
     @JoinColumn(name = "policy_taken",nullable = false)
     private Policy policy;
 
-    private Date purchaseDate;
-    private Date expiryDate;
+    private LocalDate purchaseDate;
+    private LocalDate expiryDate;
 
     @Enumerated(EnumType.STRING)
     private PolicyStatus status;  

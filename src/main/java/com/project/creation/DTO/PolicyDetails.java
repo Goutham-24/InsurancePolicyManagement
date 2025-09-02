@@ -11,4 +11,6 @@ public class PolicyDetails {
     private String policyName;
     private Double premiumAmount;
     private String validTo;
+    private int userPolicyValidity;
+
 }

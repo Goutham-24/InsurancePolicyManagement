@@ -53,6 +53,7 @@ public class AdminService {
                             .premiumAmount(policyDetails.getPremiumAmount())
                             .validFrom(LocalDate.now())
                             .validTo(LocalDate.parse(policyDetails.getValidTo()))
+                            .userPolicyValidity(policyDetails.getUserPolicyValidity())
                             .status(PolicyStatus.ACTIVE)
                             .build();
         policyrepo.save(policy);
