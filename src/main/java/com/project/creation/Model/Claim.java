@@ -1,6 +1,6 @@
 package com.project.creation.Model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import com.project.creation.Enum.ApprovalStatus;
 
@@ -36,8 +36,7 @@ public class Claim {
     @JoinColumn(name = "user_policy_id", nullable = false)  
     private UserPolicy userPolicy;
 
-    @Temporal(TemporalType.DATE)
-    private Date claimDate;
+    private LocalDate claimDate;
 
     private Double claimAmount;
 
