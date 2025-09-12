@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.project.creation.DTO.UserPolicyDto;
-import com.project.creation.DTO.userProfile;
+import com.project.creation.DTO.UserProfile;
 import com.project.creation.Enum.ApprovalStatus;
 import com.project.creation.Enum.PolicyStatus;
 import com.project.creation.Model.Claim;
@@ -38,7 +38,7 @@ public class CustomerService {
     @Autowired
     ClaimRepository claimrepo;
     
-    public ResponseEntity<String> customerProfile(userProfile profile, String userEmailId) {
+    public ResponseEntity<String> customerProfile(UserProfile profile, String userEmailId) {
         User user = userrepo.findByUserEmailId(userEmailId).orElseThrow(() -> new RuntimeException("User not found"));
             user.setUserName(profile.getUserName());
             user.setUserAge(profile.getUserAge());
@@ -47,6 +47,19 @@ public class CustomerService {
         userrepo.save(user);   
          
         return ResponseEntity.ok("Profile updated successfully");
+    }
+
+    public UserProfile gatherProfile(String userEmailId){
+        User user = userrepo.findByUserEmailId(userEmailId).orElseThrow(()-> new RuntimeException("user not found"));
+        System.out.println(">>>data :"+user);
+        UserProfile userprofile = UserProfile.builder()
+                                  .userName(user.getUserName())
+                                  .userAge(user.getUserAge())
+                                  .userPhonenumber(user.getUserPhonenumber())
+                                  .build();
+
+        return userprofile;
+                                  
     }
 
     public ResponseEntity<String> PurchasePolicy(String userEmailId, Long policyId){

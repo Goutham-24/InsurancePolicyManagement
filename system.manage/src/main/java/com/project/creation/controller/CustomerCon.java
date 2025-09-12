@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.creation.DTO.UserPolicyDto;
-import com.project.creation.DTO.userProfile;
+import com.project.creation.DTO.UserProfile;
 import com.project.creation.Model.Policy;
 import com.project.creation.Model.UserPolicy;
 import com.project.creation.Service.CustomerService;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -39,9 +40,15 @@ public class CustomerCon {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
-    @PostMapping("/Profile")
+    @GetMapping("/getProfile")
+    public UserProfile getProfile() {
+        return customerService.gatherProfile(getusername());
+    }
+    
+
+    @PutMapping("/setProfile")
     @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
-    public ResponseEntity<String> profileCustomer(@RequestBody userProfile profile) {
+    public ResponseEntity<String> profileCustomer(@RequestBody UserProfile profile) {
         return customerService.customerProfile(profile,getusername());
     }
 

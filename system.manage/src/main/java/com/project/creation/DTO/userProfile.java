@@ -1,11 +1,13 @@
 package com.project.creation.DTO;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class userProfile {
+@Builder
+public class UserProfile {
     String userName;
     Integer userAge;
     String userPhonenumber;
