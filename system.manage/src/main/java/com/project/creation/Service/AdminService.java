@@ -1,17 +1,23 @@
 package com.project.creation.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.project.creation.DTO.ClaimDto;
 import com.project.creation.DTO.PolicyDetails;
+import com.project.creation.Enum.ApprovalStatus;
 import com.project.creation.Enum.PolicyStatus;
+import com.project.creation.Model.Claim;
 import com.project.creation.Model.Policy;
 import com.project.creation.Model.User;
+import com.project.creation.Repository.ClaimRepository;
 import com.project.creation.Repository.PolicyRepository;
 import com.project.creation.Repository.UserRepsitory;
 
@@ -23,6 +29,9 @@ public class AdminService {
 
     @Autowired
     PolicyRepository policyrepo;
+
+    @Autowired
+    ClaimRepository claimrepo;
 
     public ResponseEntity<String> CustomerToAgent(Long CustomerId) {
         User user = userrepo.findById(CustomerId).orElseThrow(() -> new RuntimeException("User not found"));
@@ -59,4 +68,48 @@ public class AdminService {
         policyrepo.save(policy);
         return ResponseEntity.ok("Policy added successfully");
     }
+
+    public List<ClaimDto> totalClaims(){
+        List<Claim> claims = claimrepo.AdminClaimView();
+
+        if(claims.isEmpty()){
+            throw new RuntimeException("claims not found");
+        }
+
+        List<ClaimDto> claimDtos = new ArrayList<>();
+        for(Claim cdto : claims){
+            ClaimDto newClaim = ClaimDto.builder()
+                            .claimId(cdto.getClaimId())
+                            .userEmailId(cdto.getUserPolicy().getUser().getUserEmailId())
+                            .policyName(cdto.getUserPolicy().getPolicy().getPolicyName())
+                            .claimAmount(cdto.getClaimAmount())
+                            .claimDate(cdto.getClaimDate())
+                            .adminApproval(cdto.getAdminApproval())
+                            .build();
+
+            claimDtos.add(newClaim);                
+        }
+
+        return claimDtos;
+
+    }
+
+    public ResponseEntity<String> ApproveClaim(Long Id){
+        Claim updateClaim = claimrepo.findById(Id).orElseThrow(()-> new RuntimeException("Claim not found"));
+        updateClaim.setAdminApproval(ApprovalStatus.APPROVED);
+        updateClaim.setFinalStatus(ApprovalStatus.APPROVED);
+
+        claimrepo.save(updateClaim);
+        return ResponseEntity.ok("Approved Claim");
+    }
+
+    public ResponseEntity<String> RejectClaim(Long Id){
+         Claim updateClaim = claimrepo.findById(Id).orElseThrow(()-> new RuntimeException("Claim not found"));
+        updateClaim.setAdminApproval(ApprovalStatus.REJECTED);
+        updateClaim.setFinalStatus(ApprovalStatus.REJECTED);
+
+        claimrepo.save(updateClaim);
+        return ResponseEntity.ok("Rejected Claim");
+    }
+
 }

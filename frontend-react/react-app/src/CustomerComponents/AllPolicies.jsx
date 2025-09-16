@@ -15,6 +15,18 @@ function AllPolicies(){
                       setPolicies(res.data);
         });
     },[]);
+
+    function buyPolicy(Id){
+        axios.post(`http://localhost:8089/CustomerAccess/BuyPolicy/${Id}`,{},{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("keyToken")}`
+            },
+            responseType:"text"
+        })
+        .then((res)=>{console.log("done")})
+        .catch((err)=> {console.error(err)})
+    }
+
     return(
         <>
         <h2>All Policy place</h2>
@@ -34,7 +46,7 @@ function AllPolicies(){
                         <td>{policy.policyName}</td>
                         <td>{policy.premiumAmount}</td>
                         <td>{policy.userPolicyValidity}</td>
-                        <td onClick={()=>{console.log("solddddd....")}}><button>buy policy</button></td>
+                        <td><button onClick={()=>{buyPolicy(policy.policyId)}}>buy policy</button></td>
                     </tr>
                 ))}
             </tbody>

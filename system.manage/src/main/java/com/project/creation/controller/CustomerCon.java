@@ -3,6 +3,7 @@ package com.project.creation.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.creation.DTO.ClaimDto;
 import com.project.creation.DTO.UserPolicyDto;
 import com.project.creation.DTO.UserProfile;
 import com.project.creation.Model.Policy;
@@ -52,16 +53,23 @@ public class CustomerCon {
         return customerService.customerProfile(profile,getusername());
     }
 
-    @GetMapping("/BuyPolicy/{policyId}")
+    @PostMapping("/BuyPolicy/{policyId}")
     public ResponseEntity<String> PolicyPurchase(@PathVariable Long policyId) {
+        System.out.println(">>> PolicyID"+ policyId);
         return customerService.PurchasePolicy(getusername(), policyId);
         
     }
 
-    @GetMapping("/claim/{userpolicyId}/{Amount}")
+    @PostMapping("/claim/{userpolicyId}/{Amount}")
     public ResponseEntity<String> policyClaim(@PathVariable Long userpolicyId, @PathVariable Double Amount) {
         return customerService.ClaimPolicy(getusername(),Amount, userpolicyId);
     }
+
+    @GetMapping("/getAllClaims")
+    public List<ClaimDto> getClaims() {
+        return customerService.acquireClaims(getusername());
+    }
+    
     
     @GetMapping("/AllPolicies")
     public List<Policy> getAllPolicies() {

@@ -9,21 +9,20 @@ function AddPolicy(){
                                          "userPolicyValidity":""});  
 
     function sendPolicytoBackend(e){
-        e.preventDefault;
+        e.preventDefault();
 
         axios.post(`http://localhost:8089/AdminAccess/AddPolicy`,Policy,{
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("keyToken")}`
-            },
-            responseType:"text"
+            }
         })
-        .then((res)=>{console.log(res.data)});
+        .then((res)=>{console.log("added policy")});
 
     }
 
     
     function createPolicy(e){
-        e.preventDefault;
+        
         setPolicy({
                     ...Policy,
                     [e.target.name]:e.target.value});

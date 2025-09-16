@@ -12,14 +12,14 @@ function CustomerDashboard(){
     }
     return(
         <>
-        <p>roronava zoro</p>
         <button onClick={logoutMethod}>logout</button>
 
         <nav>
-            <Link to={"All-Policies"}>All Policies</Link>
-            <Link to={"add-policy"}><button>My policy</button></Link>
-            <button>My Claims</button>
-            <Link to={"update-profile"}>profile</Link>
+            <Link to={"All-Policies"}><button>All Policies</button></Link>
+            <Link to={"My-policy"}><button>My policy</button></Link>
+            <Link to={"My-Claims"}><button>My Claims</button></Link>
+            <Link to={"My-Appeal"}><button>claim appeal</button></Link>
+            <Link to={"update-profile"}><button>Profile</button></Link>
         </nav>
 
         <Outlet/>

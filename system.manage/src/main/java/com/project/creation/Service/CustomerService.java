@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.project.creation.DTO.ClaimDto;
 import com.project.creation.DTO.UserPolicyDto;
 import com.project.creation.DTO.UserProfile;
 import com.project.creation.Enum.ApprovalStatus;
@@ -125,5 +126,28 @@ public class CustomerService {
        }
        
        return dto;
+    }
+
+    public List<ClaimDto> acquireClaims(String userEmailId){
+        List<Claim> claims = claimrepo.CustomerClaims(userEmailId);
+        if(claims.isEmpty()){
+            throw new RuntimeException("No policies found for this user");
+       }
+
+       List<ClaimDto> cdto = new ArrayList<>();
+       for(Claim userclaims : claims){
+            ClaimDto dto = ClaimDto.builder()
+                            .claimId(userclaims.getClaimId())
+                            .userEmailId(userclaims.getUserPolicy().getUser().getUserEmailId())
+                            .policyName(userclaims.getUserPolicy().getPolicy().getPolicyName())
+                            .claimDate(userclaims.getClaimDate())
+                            .claimAmount(userclaims.getClaimAmount())
+                            .finalStatus(userclaims.getFinalStatus())
+                            .build();
+           
+            cdto.add(dto);                
+       }
+
+       return cdto;
     }
 }

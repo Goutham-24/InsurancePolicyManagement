@@ -47,5 +47,12 @@ public class AgentService {
         claimrepo.save(claim);
         return ResponseEntity.ok("Claim approved by agent");
     }
+
+    public ResponseEntity<String> agentReject(Long claimId){
+        Claim claim = claimrepo.findById(claimId).orElseThrow(() -> new RuntimeException("Claim not found"));
+        claim.setAgentApproval(ApprovalStatus.REJECTED);
+        claimrepo.save(claim);
+        return ResponseEntity.ok("Claim approved by agent");
+    }
     
 }

@@ -35,5 +35,10 @@ public class AgentCon {
     public ResponseEntity<String> updateAgentApproval(@PathVariable Long claimId) {
         return agentService.agentApprove(claimId);
     }
+
+    @PutMapping("/ClaimDenial/{claimId}")
+    public ResponseEntity<String> updateAgentRejection(@PathVariable Long claimId) {
+        return agentService.agentReject(claimId);
+    }
     
 }

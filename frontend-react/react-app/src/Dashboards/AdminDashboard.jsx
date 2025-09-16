@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function AdminDashboard(){
 
@@ -13,6 +14,10 @@ function AdminDashboard(){
         <>
         <p>this is admin dash</p>
         <button onClick={logoutMethod}>logout</button>
+
+        <Link to={"Add-Policy"}><button>Add Policy</button></Link>
+        <Link to={"Claim-view"}><button>All Claims</button></Link>
+        <Outlet/>
         </>
     )
 }
