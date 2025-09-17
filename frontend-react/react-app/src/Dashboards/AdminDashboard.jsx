@@ -17,6 +17,8 @@ function AdminDashboard(){
 
         <Link to={"Add-Policy"}><button>Add Policy</button></Link>
         <Link to={"Claim-view"}><button>All Claims</button></Link>
+        <Link to={"AgentConversion"}><button>Customer to Agent</button></Link>
+        <Link to={"AdminConversion"}><button>Agent to Admin</button></Link>
         <Outlet/>
         </>
     )

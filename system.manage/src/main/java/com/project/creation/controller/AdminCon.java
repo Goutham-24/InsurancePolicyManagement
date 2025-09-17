@@ -30,13 +30,13 @@ public class AdminCon {
     @Autowired
     AdminService adminService;
 
-    @GetMapping("/CustomerToAgent/{CustomerId}")
+    @PutMapping("/CustomerToAgent/{CustomerId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<String> CustomerConversion(@PathVariable Long CustomerId) {
         return adminService.CustomerToAgent(CustomerId);
     }
 
-    @GetMapping("/AgentToAdmin/{AgentId}")
+    @PutMapping("/AgentToAdmin/{AgentId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<String> AgentConversion(@PathVariable Long AgentId) {
         return adminService.AgentToAdmin(AgentId);

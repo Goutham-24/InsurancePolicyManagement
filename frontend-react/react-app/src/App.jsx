@@ -17,6 +17,8 @@ import CustomerClaims from './CustomerComponents/CustomerClaims';
 import CustomerClaimAppeal from './CustomerComponents/CustomerClaimAppeal';
 import AgentViewClaims from './AgentComponents/AgentViewClaims';
 import AdminClaimView from './AdminComponents/AdminClaimView';
+import CustomerToAgent from './AdminComponents/CustomerToAgent';
+import AgentToAdmin from './AdminComponents/AgentToAdmin';
 
 function App() {
 
@@ -69,7 +71,8 @@ function App() {
         }>
           <Route path='Add-Policy' element={<AddPolicy/>}/>
           <Route path='Claim-view' element={<AdminClaimView/>}/>
-
+          <Route path='AgentConversion' element={<CustomerToAgent/>}/>
+          <Route path='AdminConversion' element={<AgentToAdmin/>}/>
       </Route>
 
         <Route path='*' element={<Login/>}/>

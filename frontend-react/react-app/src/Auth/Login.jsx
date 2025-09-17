@@ -3,6 +3,7 @@ import axios from 'axios'
 import {jwtDecode} from "jwt-decode"; 
 import {useNavigate} from "react-router-dom";
 import { Link } from 'react-router-dom';
+import styles from "./Auth-css/Login.module.css"
 function Login(){
     const navigate = useNavigate();
     
@@ -62,18 +63,23 @@ function Login(){
 
     return(
         <>
-        <div>
-            <form onSubmit={Logincall}>
+        <div className={styles.formcontainer}>
+            <h2>LOGIN</h2>
+            <form onSubmit={Logincall} >
+                <div className={styles.formgroup}>
+                <label htmlFor="userEmailId">EmailId</label>
                 <input type="text" name="userEmailId" value={credentials.userEmailId} onChange={usercredentails} placeholder="user@gmail.com" required/>
+                </div>
+
+                <div className={styles.formgroup}>
+                <label htmlFor="userPassword">Password</label>
                 <input type="Password" name="userPassword" value={credentials.userPassword} onChange={usercredentails} placeholder="Enter password" required/>
+                </div>
+                
                 <br />
-                <button type='submit'>Submit</button>
+                <button type='submit' className={styles.btn}>Submit</button>
             </form>
-            <br />
-            <button onClick={getusername}>click to get name</button>
-            <br />
-            <Link to={"/Signup"}>Signup</Link>
-            
+            <Link to={"/Signup"}><button className={styles.btn2}>Signup</button></Link>
         </div>
         </>
     )
