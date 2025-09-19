@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import styles from "./customers-css/table.module.css";
 function CustomerPolicy(){
     const [userPolicy,setUserPolicy] = useState([]);
     useEffect(()=>{
@@ -15,7 +16,7 @@ function CustomerPolicy(){
     return(
         <>
         <div>
-            <table>
+            <table className={styles.table}>
                 <thead>
                     <tr>
                         <th>userPolicyId</th>

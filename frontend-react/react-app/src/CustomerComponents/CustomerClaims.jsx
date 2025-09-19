@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import styles from "./customers-css/table.module.css";
 function CustomerClaims(){
 
     const [Claims,setClaims] = useState([]);
@@ -16,7 +17,7 @@ function CustomerClaims(){
     return(
         <>
         <div>
-            <table>
+            <table className={styles.table}>
                 <thead>
                     <tr>
                         <th>claimId</th>

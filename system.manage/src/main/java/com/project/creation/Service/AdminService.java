@@ -14,6 +14,8 @@ import com.project.creation.DTO.ClaimDto;
 import com.project.creation.DTO.PolicyDetails;
 import com.project.creation.Enum.ApprovalStatus;
 import com.project.creation.Enum.PolicyStatus;
+import com.project.creation.Exceptions.ClaimNotFoundException;
+import com.project.creation.Exceptions.UserNotFoundException;
 import com.project.creation.Model.Claim;
 import com.project.creation.Model.Policy;
 import com.project.creation.Model.User;
@@ -34,7 +36,7 @@ public class AdminService {
     ClaimRepository claimrepo;
 
     public ResponseEntity<String> CustomerToAgent(Long CustomerId) {
-        User user = userrepo.findById(CustomerId).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userrepo.findById(CustomerId).orElseThrow(() -> new UserNotFoundException("User not found"));
         if("ROLE_CUSTOMER".equals(user.getRole())) {
             user.setRole("ROLE_AGENT");
             userrepo.save(user);
@@ -45,12 +47,12 @@ public class AdminService {
     }
 
     public ResponseEntity<String> AgentToAdmin(Long AgentId){
-        User agent = userrepo.findById(AgentId).orElseThrow(() -> new RuntimeException("User not found"));
+        User agent = userrepo.findById(AgentId).orElseThrow(() -> new UserNotFoundException("User not found"));
         if("ROLE_AGENT".equals(agent.getRole())){
             agent.setRole("ROLE_ADMIN");
             userrepo.save(agent);
         } else {
-            throw new RuntimeException("User is not an AGENT");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Uer is not a Agent");
         }
 
         return ResponseEntity.ok("Agent updated to ADMIN");
@@ -69,11 +71,11 @@ public class AdminService {
         return ResponseEntity.ok("Policy added successfully");
     }
 
-    public List<ClaimDto> totalClaims(){
+    public List<?> totalClaims(){
         List<Claim> claims = claimrepo.AdminClaimView();
 
         if(claims.isEmpty()){
-            throw new RuntimeException("claims not found");
+            return claims;
         }
 
         List<ClaimDto> claimDtos = new ArrayList<>();
@@ -95,7 +97,7 @@ public class AdminService {
     }
 
     public ResponseEntity<String> ApproveClaim(Long Id){
-        Claim updateClaim = claimrepo.findById(Id).orElseThrow(()-> new RuntimeException("Claim not found"));
+        Claim updateClaim = claimrepo.findById(Id).orElseThrow(()-> new ClaimNotFoundException("Claim not found"));
         updateClaim.setAdminApproval(ApprovalStatus.APPROVED);
         updateClaim.setFinalStatus(ApprovalStatus.APPROVED);
 
@@ -104,7 +106,7 @@ public class AdminService {
     }
 
     public ResponseEntity<String> RejectClaim(Long Id){
-         Claim updateClaim = claimrepo.findById(Id).orElseThrow(()-> new RuntimeException("Claim not found"));
+         Claim updateClaim = claimrepo.findById(Id).orElseThrow(()-> new ClaimNotFoundException("Claim not found"));
         updateClaim.setAdminApproval(ApprovalStatus.REJECTED);
         updateClaim.setFinalStatus(ApprovalStatus.REJECTED);
 

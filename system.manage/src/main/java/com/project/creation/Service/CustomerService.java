@@ -15,6 +15,8 @@ import com.project.creation.DTO.UserPolicyDto;
 import com.project.creation.DTO.UserProfile;
 import com.project.creation.Enum.ApprovalStatus;
 import com.project.creation.Enum.PolicyStatus;
+import com.project.creation.Exceptions.UserNotFoundException;
+import com.project.creation.Exceptions.UserPolicyNotFoundException;
 import com.project.creation.Model.Claim;
 import com.project.creation.Model.Policy;
 import com.project.creation.Model.User;
@@ -40,7 +42,7 @@ public class CustomerService {
     ClaimRepository claimrepo;
     
     public ResponseEntity<String> customerProfile(UserProfile profile, String userEmailId) {
-        User user = userrepo.findByUserEmailId(userEmailId).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userrepo.findByUserEmailId(userEmailId).orElseThrow(() -> new UserNotFoundException("User not found"));
             user.setUserName(profile.getUserName());
             user.setUserAge(profile.getUserAge());
             user.setUserPhonenumber(profile.getUserPhonenumber());
@@ -51,7 +53,7 @@ public class CustomerService {
     }
 
     public UserProfile gatherProfile(String userEmailId){
-        User user = userrepo.findByUserEmailId(userEmailId).orElseThrow(()-> new RuntimeException("user not found"));
+        User user = userrepo.findByUserEmailId(userEmailId).orElseThrow(()-> new UserNotFoundException("user not found"));
         System.out.println(">>>data :"+user);
         UserProfile userprofile = UserProfile.builder()
                                   .userName(user.getUserName())
@@ -64,7 +66,7 @@ public class CustomerService {
     }
 
     public ResponseEntity<String> PurchasePolicy(String userEmailId, Long policyId){
-        User user = userrepo.findByUserEmailId(userEmailId).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userrepo.findByUserEmailId(userEmailId).orElseThrow(() -> new UserNotFoundException("User not found"));
         Policy policy = policyrepo.findByPolicyId(policyId);
         UserPolicy UP = UserPolicy.builder()
                         .user(user)
@@ -79,7 +81,7 @@ public class CustomerService {
     }
 
     public ResponseEntity<String> ClaimPolicy(String userEmailId,Double Amount,Long userpolicyId){
-        UserPolicy userpolicy = userpolicyrepo.findById(userpolicyId).orElseThrow(() -> new RuntimeException("UserPolicy not found"));
+        UserPolicy userpolicy = userpolicyrepo.findById(userpolicyId).orElseThrow(() -> new UserPolicyNotFoundException("UserPolicy not found"));
         if(userpolicy.getUser().getUserEmailId().equals(userEmailId) && userpolicy.getStatus() == PolicyStatus.ACTIVE) {
             if(LocalDate.now().isAfter(userpolicy.getExpiryDate())){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Policy has expired, cannot claim");
@@ -109,7 +111,7 @@ public class CustomerService {
     public List<UserPolicyDto> myPolicies(String userEmailId) {
        List<UserPolicy> ups = userpolicyrepo.getAllUserPolicies(userEmailId);
        if(ups.isEmpty()){
-            throw new RuntimeException("No policies found for this user");
+            throw new UserPolicyNotFoundException("No policies found for this user");
        }
 
        List<UserPolicyDto> dto = new ArrayList<>();
@@ -131,7 +133,7 @@ public class CustomerService {
     public List<ClaimDto> acquireClaims(String userEmailId){
         List<Claim> claims = claimrepo.CustomerClaims(userEmailId);
         if(claims.isEmpty()){
-            throw new RuntimeException("No policies found for this user");
+            throw new UserPolicyNotFoundException("No policies found for this user");
        }
 
        List<ClaimDto> cdto = new ArrayList<>();

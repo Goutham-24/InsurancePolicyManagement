@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from 'axios';
-
+import styles from "./Admin-css/forms.module.css";
 function AddPolicy(){
 
     const [Policy,setPolicy] = useState({"policyName":"",
@@ -30,13 +30,33 @@ function AddPolicy(){
 
     return(
         <>
-            <div>
+            <div className={styles.container}>
+                <h2>ADD POLICY</h2>
                 <form onSubmit={sendPolicytoBackend}>
-                <input type="text" name="policyName" value={Policy.policyName} onChange={createPolicy} placeholder='policyName' required/>
-                <input type="number" name="premiumAmount" value={Policy.premiumAmount} onChange={createPolicy} placeholder='premiumAmount' required/>
-                <input type="text" name="validTo" value={Policy.validTo} onChange={createPolicy} placeholder='validTo' required/>
-                <input type="number" name="userPolicyValidity" value={Policy.userPolicyValidity} onChange={createPolicy} placeholder='userPolicyValidity' required/>
-                <button type='submit'>Submit</button>
+                    <div className={styles.inputholder}>
+                        <label htmlFor="policyName">Policy Name</label>
+                        <input type="text" name="policyName" value={Policy.policyName} onChange={createPolicy} placeholder='policyName' required/>
+                    </div>
+
+                    <div className={styles.inputholder}>
+                        <label htmlFor="premiumAmount">Premium Amount</label>
+                        <input type="number" name="premiumAmount" value={Policy.premiumAmount} onChange={createPolicy} placeholder='premiumAmount' required/>
+                    </div>
+
+                    <div className={styles.inputholder}>
+                        <label htmlFor="validTo">Policy Vaidity Date</label>
+                        <input type="text" name="validTo" value={Policy.validTo} onChange={createPolicy} placeholder='validTo' required/>
+                    </div>
+
+                    <div className={styles.inputholder}>
+                        <label htmlFor="userPolicyValidity"> Valid Upto</label>
+                        <input type="number" name="userPolicyValidity" value={Policy.userPolicyValidity} onChange={createPolicy} placeholder='userPolicyValidity' required/>
+                    </div>
+                
+                
+                
+                
+                <button type='submit' className={styles.submit}>Submit</button>
                 </form>
             </div>
         </>

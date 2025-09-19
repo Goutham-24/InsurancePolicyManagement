@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-
+import styles from "./Admin-css/forms.module.css";
 function AgentToAdmin(){
     const [AgentId,setAgentId] = useState(0);
 
@@ -22,11 +22,18 @@ function AgentToAdmin(){
 
     return(
         <>
+        <div className={styles.container}>
+            <h2>AGENT CONVERTOR</h2>
         <form onSubmit={converter}>
+            <div className={styles.inputholder}>
             <label htmlFor="">Agent to Admin</label>
             <input type="number" name="AgentId" value={AgentId} onChange={storeId} placeholder="Enter Customer ID to Convert" required />
-            <button type="submit">Convert</button>
+            </div>
+
+            <button type="submit" className={styles.submit}>Convert</button>
         </form>
+
+        </div>
         </>
     )
 }

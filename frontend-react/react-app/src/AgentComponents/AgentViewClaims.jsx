@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
+import styles from "./Agent-css/froms.module.css";
 
 function AgentViewClaims(){
     const Navigate = useNavigate();
-    const [Status,setstatus] = useState();
     const [Claimlist,setClaimlist] = useState([]);
 
     function allCustomerClaims(){
@@ -13,7 +13,8 @@ function AgentViewClaims(){
                 Authorization: `Bearer ${localStorage.getItem("keyToken")}`
             }
         })
-        .then((res)=>{setClaimlist(res.data);
+        .then((res)=>{console.log(res);
+                      setClaimlist(res.data || []);
                       console.log(res.data);
         });
     }
@@ -47,7 +48,7 @@ function AgentViewClaims(){
     return(
         <>
         <div>
-            <table>
+            <table className={styles.table}>
                 <thead>
                     <tr>
                         <th>claim Id</th>
@@ -56,11 +57,15 @@ function AgentViewClaims(){
                         <th>claimAmount</th>
                         <th>claimDate</th>
                         <th>agentApproval</th>
+                        <th>Approval</th>
+                        <th>Rejection</th>
+
                     </tr>
                 </thead>
 
                 <tbody>
-                    {Claimlist.map((claims)=>(
+                    {Claimlist.length > 0 ? (
+                    Claimlist.map((claims)=>(
                         <tr key={claims.claimId}>
                             <td>{claims.claimId}</td>
                             <td>{claims.policyName}</td>
@@ -68,10 +73,15 @@ function AgentViewClaims(){
                             <td>{claims.claimAmount}</td>
                             <td>{claims.claimDate}</td>
                             <td>{claims.agentApproval}</td>
-                            <td><button onClick={()=>{ClaimApproveOrReject(claims.claimId,"APPROVE")}}>Approve</button></td>
-                            <td><button onClick={()=>{ClaimApproveOrReject(claims.claimId,"REJECT")}}>Reject</button></td>
+                            <td><button className={styles.accept} onClick={()=>{ClaimApproveOrReject(claims.claimId,"APPROVE")}}>Approve</button></td>
+                            <td><button className={styles.reject} onClick={()=>{ClaimApproveOrReject(claims.claimId,"REJECT")}}>Reject</button></td>
                         </tr>
-                    ))}
+                    ))):(
+                        <td colSpan="8" style={{ textAlign: "center" }}>
+                            No claims available
+                        </td>
+                    )
+                    }
                 </tbody>
             </table>
         </div>

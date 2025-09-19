@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.creation.DTO.ClaimDto;
 import com.project.creation.Enum.ApprovalStatus;
+import com.project.creation.Exceptions.ClaimNotFoundException;
 import com.project.creation.Model.Claim;
 import com.project.creation.Repository.ClaimRepository;
 
@@ -17,11 +18,11 @@ public class AgentService {
     @Autowired
     ClaimRepository claimrepo;
 
-    public List<ClaimDto> customerClaims() {
+    public List<?> customerClaims() {
         List<Claim> claims = claimrepo.AgentClaimView();
 
         if(claims.isEmpty()){
-            throw new RuntimeException("No claims found");
+            return claims;
         }
 
         List<ClaimDto> claimDtos = new ArrayList<>();
@@ -42,14 +43,14 @@ public class AgentService {
     }
 
     public ResponseEntity<String> agentApprove(Long claimId){
-        Claim claim = claimrepo.findById(claimId).orElseThrow(() -> new RuntimeException("Claim not found"));
+        Claim claim = claimrepo.findById(claimId).orElseThrow(() -> new ClaimNotFoundException("Claim not found"));
         claim.setAgentApproval(ApprovalStatus.APPROVED);
         claimrepo.save(claim);
         return ResponseEntity.ok("Claim approved by agent");
     }
 
     public ResponseEntity<String> agentReject(Long claimId){
-        Claim claim = claimrepo.findById(claimId).orElseThrow(() -> new RuntimeException("Claim not found"));
+        Claim claim = claimrepo.findById(claimId).orElseThrow(() -> new ClaimNotFoundException("Claim not found"));
         claim.setAgentApproval(ApprovalStatus.REJECTED);
         claimrepo.save(claim);
         return ResponseEntity.ok("Claim approved by agent");

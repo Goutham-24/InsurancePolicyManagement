@@ -1,5 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import styles from "./Dashboard-css/navbar.module.css";
 function AgentDashboard(){
 
     const navigate = useNavigate();
@@ -11,10 +12,15 @@ function AgentDashboard(){
     }
     return(
         <>
-        <p>this is agent dash</p>
-        <button onClick={logoutMethod}>logout</button>
-        <Link to={"Customer-Claims"}><button> View Customer Claims</button></Link>
+        <nav className={styles.customerNav}>
+            <Link to={"Customer-Claims"}><button className={styles.btns}> View Customer Claims</button></Link>
+            <button onClick={logoutMethod} className={styles.logout}>logout</button>
+        </nav>
+        
+        
+        <div className={styles.dash}>
         <Outlet/>
+        </div>
         </>
     )
 }

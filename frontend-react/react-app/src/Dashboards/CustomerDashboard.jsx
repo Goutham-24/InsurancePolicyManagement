@@ -2,6 +2,7 @@ import { Link, Navigate, Outlet, Route, Routes, useNavigate } from "react-router
 import AddPolicy from "../AdminComponents/AddPolicy";
 import PrivateRoute from "../Auth/PrivateRoute";
 import CustomerProfile from "../CustomerComponents/CustomerProfile";
+import styles from "./Dashboard-css/navbar.module.css"
 function CustomerDashboard(){
     const navigate = useNavigate();
 
@@ -12,18 +13,22 @@ function CustomerDashboard(){
     }
     return(
         <>
-        <button onClick={logoutMethod}>logout</button>
-
-        <nav>
-            <Link to={"All-Policies"}><button>All Policies</button></Link>
-            <Link to={"My-policy"}><button>My policy</button></Link>
-            <Link to={"My-Claims"}><button>My Claims</button></Link>
-            <Link to={"My-Appeal"}><button>claim appeal</button></Link>
-            <Link to={"update-profile"}><button>Profile</button></Link>
+        <div className={styles.container}>
+        <nav className={styles.customerNav}> 
+            <Link to={"update-profile"}><button className={styles.btns1}>Profile</button></Link>
+            <Link to={"All-Policies"}><button className={styles.btns}>All Policies</button></Link>
+            <Link to={"My-policy"}><button className={styles.btns}>My policy</button></Link>
+            <Link to={"My-Claims"}><button className={styles.btns}>My Claims</button></Link>
+            <Link to={"My-Appeal"}><button className={styles.btns}>claim appeal</button></Link>
+            
+            <button onClick={logoutMethod} className={styles.logout}>logout</button>
         </nav>
 
-        <Outlet/>
-
+        <div className={styles.dash}>
+            <Outlet/>
+        </div>
+        
+        </div>
         </>
     )
 }

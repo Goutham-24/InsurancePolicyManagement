@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-
+import styles from "./customers-css/form.module.css";
 function CustomerProfile(){
     const Navigate = useNavigate();
     const [profile,setProfile] = useState({ 
@@ -53,13 +53,25 @@ function CustomerProfile(){
 
     return(
         <>
-        <div>
-            <p>The Profile</p>
+        <div className={styles.container}>
+            <h2>PROFILE</h2>
             <form onSubmit={updateProfile}>
+                <div className={styles.inputholder}>
+                <label htmlFor="userName">Username</label>
                 <input type="text" name="userName" value={profile.userName} onChange={saveProfile} required/>
+                </div>
+
+                <div className={styles.inputholder}>
+                <label htmlFor="userAge">Age</label>
                 <input type="number" name="userAge" value={profile.userAge} onChange={saveProfile} required/>
+                </div>
+
+                <div className={styles.inputholder}>
+                <label htmlFor="userPhonenumber">Phone Number</label>
                 <input type="text" name="userPhonenumber" value={profile.userPhonenumber} onChange={saveProfile} required/>
-                <button type="submit">Save</button>
+                </div>
+
+                <button type="submit" className={styles.submit}>Save</button>
             </form>
             
         </div>

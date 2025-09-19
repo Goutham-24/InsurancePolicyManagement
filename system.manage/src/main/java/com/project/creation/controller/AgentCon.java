@@ -27,7 +27,7 @@ public class AgentCon {
     AgentService agentService;
 
     @GetMapping("/getClaims")
-    public List<ClaimDto> getCustomerClaims() {
+    public List<?> getCustomerClaims() {
         return agentService.customerClaims();
     }
 

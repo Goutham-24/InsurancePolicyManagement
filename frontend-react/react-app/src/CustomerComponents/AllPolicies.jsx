@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
-
+import styles from "./customers-css/table.module.css";
 function AllPolicies(){
 
     const [Policies,setPolicies] = useState([]);
@@ -31,12 +31,13 @@ function AllPolicies(){
         <>
         <h2>All Policy place</h2>
         <br />
-        <table>
+        <table className={styles.table}>
             <thead>
                 <tr>
                     <th>Policy Name</th>
                     <th>Premium</th>
                     <th>Validity</th>
+                    <th>Purchase</th>
                 </tr>
             </thead>
 
@@ -46,7 +47,7 @@ function AllPolicies(){
                         <td>{policy.policyName}</td>
                         <td>{policy.premiumAmount}</td>
                         <td>{policy.userPolicyValidity}</td>
-                        <td><button onClick={()=>{buyPolicy(policy.policyId)}}>buy policy</button></td>
+                        <td><button className={styles.accept} onClick={()=>{buyPolicy(policy.policyId)}}>Buy Policy</button></td>
                     </tr>
                 ))}
             </tbody>

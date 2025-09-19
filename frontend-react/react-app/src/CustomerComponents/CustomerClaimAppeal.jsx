@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import styles from "./customers-css/form.module.css";
 function CustomerClaimAppeal(){
     const [claim,setclaim] = useState({
                                         "userPolicyId":"",
@@ -33,11 +34,20 @@ function CustomerClaimAppeal(){
 
     return(
         <>
-        <div>
+        <div className={styles.container}>
+            <h2>CLAIM APPEAL</h2>
             <form onSubmit={postclaim}>
+                <div className={styles.inputholder}> 
+                <label htmlFor="userPolicyId">User Policy ID</label>
                 <input type="text" name="userPolicyId" value={claim.userPolicyId} onChange={claimupdates} placeholder="Enter the User Policy ID" required />
+                </div>
+
+                <div className={styles.inputholder}>
+                <label htmlFor="amount">Appreal Amount</label>
                 <input type="number" name="amount" value={claim.amount} onChange={claimupdates} placeholder="Enter the claim Amount " required />
-                <button type="submit">Submit Claim</button>
+                </div>
+
+                <button type="submit" className={styles.submit}>Submit</button>
             </form>
         </div>
         </>

@@ -1,0 +1,58 @@
+
+.customerNav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(127, 248, 113);
+    padding: 3% 40px 3% 22px;
+    border: 5px solid black;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom: 0px;
+
+}
+
+.logout{
+    background-color: rgb(238, 97, 97);
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px 22px 10px 22px;
+    margin-left: auto;
+    
+}
+
+.btns{
+    background-color: rgb(253, 254, 255);
+    color: rgb(39, 110, 39);
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px 35px 10px 35px;
+    border-radius: 10px;
+    transition: background 0.3s;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.btns:hover{
+    background-color: rgb(10, 196, 59);
+    color: white;
+}
+
+.btns1{
+    background-color: rgb(32, 108, 184);
+    color: rgb(244, 248, 244);
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px 35px 10px 35px;
+    border-radius: 10px;
+    transition: background 0.3s;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.dash{
+    background: rgb(249, 247, 250);
+    border: 5px solid black;
+    min-height: 100vh;
+}

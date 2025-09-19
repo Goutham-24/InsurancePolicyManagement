@@ -51,7 +51,7 @@ public class AdminCon {
     
     @GetMapping("/getAllClaims")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public List<ClaimDto> getAllClaims() {
+    public List<?> getAllClaims() {
         return adminService.totalClaims();
     }
     

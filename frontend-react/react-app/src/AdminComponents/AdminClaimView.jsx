@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import styles from "./Admin-css/table.module.css";
 function AdminClaimView(){
     const [claim,setclaim] = useState([]);
 
@@ -43,7 +44,7 @@ function AdminClaimView(){
     return(
         <>
         <div>
-            <table>
+            <table className={styles.table}>
                 <thead>
                     <tr>
                         <th>claimId</th>
@@ -52,11 +53,14 @@ function AdminClaimView(){
                         <th>claimAmount</th>
                         <th>claimDate</th>
                         <th>adminApproval</th>
+                        <th>Approval</th>
+                        <th>Rejection</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    {claim.map((claims)=> (
+                    {claim.length > 0? (
+                    claim.map((claims)=> (
                         <tr key={claims.claimId}>
                             <td>{claims.claimId}</td>
                             <td>{claims.policyName}</td>
@@ -64,10 +68,14 @@ function AdminClaimView(){
                             <td>{claims.claimAmount}</td>
                             <td>{claims.claimDate}</td>
                             <td>{claims.adminApproval}</td>
-                            <td><button onClick={()=>{ApproveOrRejectClaims(claims.claimId,"APPROVE")}}>Approve</button></td>
-                            <td><button onClick={()=>{ApproveOrRejectClaims(claims.claimId,"REJECT")}}>Reject</button></td>
+                            <td><button className={styles.accept} onClick={()=>{ApproveOrRejectClaims(claims.claimId,"APPROVE")}}>Approve</button></td>
+                            <td><button className={styles.reject} onClick={()=>{ApproveOrRejectClaims(claims.claimId,"REJECT")} }>Reject</button></td>
                         </tr>
-                    ))}
+                    ))): (
+                        <td colSpan={8} style={{ textAlign: "center" }}>
+                            No Claim Available
+                        </td>
+                    )}
                 </tbody>
             </table>
         </div>

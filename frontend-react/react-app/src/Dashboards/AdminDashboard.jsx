@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-
+import styles from "./Dashboard-css/navbar.module.css";
 function AdminDashboard(){
 
     const navigate = useNavigate();
@@ -12,14 +12,17 @@ function AdminDashboard(){
     }
     return(
         <>
-        <p>this is admin dash</p>
-        <button onClick={logoutMethod}>logout</button>
-
-        <Link to={"Add-Policy"}><button>Add Policy</button></Link>
-        <Link to={"Claim-view"}><button>All Claims</button></Link>
-        <Link to={"AgentConversion"}><button>Customer to Agent</button></Link>
-        <Link to={"AdminConversion"}><button>Agent to Admin</button></Link>
+        
+        <nav className={styles.customerNav}>
+        <Link to={"Add-Policy"}><button className={styles.btns}>Add Policy</button></Link>
+        <Link to={"Claim-view"}><button className={styles.btns}>All Claims</button></Link>
+        <Link to={"AgentConversion"}><button className={styles.btns}>Customer to Agent</button></Link>
+        <Link to={"AdminConversion"}><button className={styles.btns}>Agent to Admin</button></Link>
+        <button onClick={logoutMethod}className={styles.logout}>logout</button>
+        </nav>
+        <div className={styles.dash}>
         <Outlet/>
+        </div>
         </>
     )
 }
