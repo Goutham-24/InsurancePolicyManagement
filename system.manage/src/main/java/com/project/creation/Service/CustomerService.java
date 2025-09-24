@@ -108,10 +108,10 @@ public class CustomerService {
         return policyrepo.findAll();
     }
 
-    public List<UserPolicyDto> myPolicies(String userEmailId) {
+    public List<?> myPolicies(String userEmailId) {
        List<UserPolicy> ups = userpolicyrepo.getAllUserPolicies(userEmailId);
        if(ups.isEmpty()){
-            throw new UserPolicyNotFoundException("No policies found for this user");
+            return ups;
        }
 
        List<UserPolicyDto> dto = new ArrayList<>();
@@ -130,10 +130,10 @@ public class CustomerService {
        return dto;
     }
 
-    public List<ClaimDto> acquireClaims(String userEmailId){
+    public List<?> acquireClaims(String userEmailId){
         List<Claim> claims = claimrepo.CustomerClaims(userEmailId);
         if(claims.isEmpty()){
-            throw new UserPolicyNotFoundException("No policies found for this user");
+            return claims;
        }
 
        List<ClaimDto> cdto = new ArrayList<>();

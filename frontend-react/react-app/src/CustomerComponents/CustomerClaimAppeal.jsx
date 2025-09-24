@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import styles from "./customers-css/form.module.css";
+import { toast } from "react-toastify";
 function CustomerClaimAppeal(){
     const [claim,setclaim] = useState({
                                         "userPolicyId":"",
@@ -24,10 +25,19 @@ function CustomerClaimAppeal(){
             
             
         })
-        .then((res)=>{console.log("done");
+        .then((res)=>{toast.success(res.data);
                       setclaim({
                         "userPolicyId":"",
                         "amount":"" });
+        })
+        .catch((err)=>{
+                       let store = err?.response?.data;
+                       if(typeof store === "string"){
+                        toast.error(err?.response?.data);
+                       }
+                       else{
+                        toast.error(err?.response?.data.Body);
+                       }
         });
 
     }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import styles from "./Admin-css/forms.module.css";
+import { toast } from "react-toastify";
 function AgentToAdmin(){
     const [AgentId,setAgentId] = useState(0);
 
@@ -15,8 +16,19 @@ function AgentToAdmin(){
                 Authorization: `Bearer ${localStorage.getItem("keyToken")}`
             }
         })
-        .then((res)=>{console.log("Converted to Admin");
+        .then((res)=>{toast.success(res.data);
                       setAgentId(0);
+        })
+        
+        .catch((err) =>{
+                        let store = err?.response?.data;
+                        
+                        if(typeof store === "string"){
+                            toast.error(err?.response.data);
+                        }
+                        else{
+                            toast.error(err?.response.data.Body);
+                        }
         });
     }
 

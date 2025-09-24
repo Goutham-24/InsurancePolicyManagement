@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import styles from "./Admin-css/forms.module.css";
+import { toast } from "react-toastify";
 function CustomerToAgent(){
     const [CustomerId,setCustomerId] = useState(0);
 
@@ -15,7 +16,19 @@ function CustomerToAgent(){
                 Authorization: `Bearer ${localStorage.getItem("keyToken")}`
             }
         })
-        .then((res)=>{console.log("Converted to Agent")});
+        .then((res)=>{toast.success(res.data);
+                      setCustomerId(0);
+        })
+        .catch((err)=>{
+                      let store = err?.response?.data;
+                                              
+                      if(typeof store === "string"){
+                        toast.error(err?.response.data);
+                      }
+                      else{
+                        toast.error(err?.response.data.Body);
+                    }
+        });
     }
 
     return(

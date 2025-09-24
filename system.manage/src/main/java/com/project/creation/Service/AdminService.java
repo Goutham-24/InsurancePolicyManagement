@@ -52,7 +52,7 @@ public class AdminService {
             agent.setRole("ROLE_ADMIN");
             userrepo.save(agent);
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Uer is not a Agent");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User is not a Agent");
         }
 
         return ResponseEntity.ok("Agent updated to ADMIN");

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import styles from "./customers-css/table.module.css";
+import { toast } from "react-toastify";
 function CustomerClaims(){
 
     const [Claims,setClaims] = useState([]);
@@ -12,7 +13,8 @@ function CustomerClaims(){
         })
         .then((res)=>{setClaims(res.data);
                       console.log(res.data);
-        });
+        })
+        .catch((err)=>{toast.error("something went wrong")});
     },[]);
     return(
         <>
@@ -29,7 +31,8 @@ function CustomerClaims(){
                 </thead>
 
                 <tbody>
-                    {Claims.map((userclaim)=> (
+                    {Claims.length > 0? (
+                    Claims.map((userclaim)=> (
                         <tr key={userclaim.claimId}>
                             <td>{userclaim.claimId}</td>
                             <td>{userclaim.policyName}</td>
@@ -37,7 +40,12 @@ function CustomerClaims(){
                             <td>{userclaim.claimDate}</td>
                             <td>{userclaim.finalStatus}</td>
                         </tr>
-                    ))}
+                    ))) : (
+                        <tr><td colSpan={"5"} style={{textAlign:"center"}}>
+                            No Claims Yet...
+                        </td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
         </div>

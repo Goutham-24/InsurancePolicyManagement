@@ -53,7 +53,7 @@ public class AgentService {
         Claim claim = claimrepo.findById(claimId).orElseThrow(() -> new ClaimNotFoundException("Claim not found"));
         claim.setAgentApproval(ApprovalStatus.REJECTED);
         claimrepo.save(claim);
-        return ResponseEntity.ok("Claim approved by agent");
+        return ResponseEntity.ok("Claim rejected by agent");
     }
     
 }

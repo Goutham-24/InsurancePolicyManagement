@@ -29,7 +29,8 @@ function CustomerPolicy(){
                 </thead>
 
                 <tbody>
-                    {userPolicy.map((policies)=> (
+                    {userPolicy.length > 0 ? (
+                    userPolicy.map((policies)=> (
                         <tr key={policies.userPolicyId}>
                             <td>{policies.userPolicyId}</td>
                             <td>{policies.policy.policyId}</td>
@@ -38,7 +39,12 @@ function CustomerPolicy(){
                             <td>{policies.expiryDate}</td>
                             <td>{policies.status}</td>
                         </tr>
-                    ))}
+                    ))) :(
+                        <tr><td colSpan="6" style={{textAlign: "center"}}>
+                            No Policy Bought Yet...
+                        </td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
         </div>

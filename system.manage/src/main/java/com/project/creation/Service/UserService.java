@@ -43,7 +43,7 @@ public class UserService{
         return ResponseEntity.ok("User signed up successfully");
     }
 
-    public ResponseEntity<?> loginUser(UserCredential credentials){
+    public ResponseEntity<String> loginUser(UserCredential credentials){
         System.out.println(">>> loginUser called with: " + credentials.getUserEmailId());
 
         if(credentials.getUserEmailId() == null || credentials.getUserPassword() == null){

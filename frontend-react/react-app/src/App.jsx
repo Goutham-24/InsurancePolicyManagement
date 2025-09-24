@@ -19,7 +19,7 @@ import AgentViewClaims from './AgentComponents/AgentViewClaims';
 import AdminClaimView from './AdminComponents/AdminClaimView';
 import CustomerToAgent from './AdminComponents/CustomerToAgent';
 import AgentToAdmin from './AdminComponents/AgentToAdmin';
-
+import {toast,ToastContainer} from "react-toastify"; 
 function App() {
 
   const [test,settest] = useState();
@@ -78,7 +78,7 @@ function App() {
         <Route path='*' element={<Login/>}/>
     </Routes>
     
-
+    <ToastContainer position='top-right' autoClose={3000}/>
     
     </>
   )

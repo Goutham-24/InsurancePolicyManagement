@@ -4,6 +4,7 @@ import {jwtDecode} from "jwt-decode";
 import {useNavigate} from "react-router-dom";
 import { Link } from 'react-router-dom';
 import styles from "./Auth-css/Login.module.css"
+import { toast } from 'react-toastify';
 function Login(){
     const navigate = useNavigate();
     
@@ -29,22 +30,34 @@ function Login(){
                      const decoded = jwtDecode(res.data);
                      localStorage.setItem("userrole",decoded.role);
                      
+                     toast.success("Successfulluy Logged-In");
+
                      if(localStorage.getItem("keyToken")){
                         const role = localStorage.getItem("userrole");
                         if(role == "ROLE_CUSTOMER"){
-                            navigate("/customer-dashboard");
+                            navigate("/customer-dashboard/All-Policies");
                         }
                         else if(role == "ROLE_AGENT"){
-                            navigate("/agent-dashboard");
+                            navigate("/agent-dashboard/Customer-Claims");
                         }
                         else if(role == "ROLE_ADMIN"){
-                            navigate("/admin-dashboard");
+                            navigate("/admin-dashboard/Claim-view");
                         }
                      }
                      
                      
         })
-        .catch((err)=> alert(err.message));
+        .catch((err)=> {
+                       const store = err?.response?.data;
+                       
+                       try{
+                            let errors = JSON.parse(store);
+                            Object.values(errors).forEach((val)=>{toast.error(val)});
+                       }
+                       catch(e){
+                            toast.error(store);
+                       }
+        });
 
     }
 

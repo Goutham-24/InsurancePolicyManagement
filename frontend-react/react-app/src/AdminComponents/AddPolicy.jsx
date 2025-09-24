@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from 'axios';
 import styles from "./Admin-css/forms.module.css";
+import { toast } from "react-toastify";
 function AddPolicy(){
 
     const [Policy,setPolicy] = useState({"policyName":"",
@@ -16,7 +17,17 @@ function AddPolicy(){
                 Authorization: `Bearer ${localStorage.getItem("keyToken")}`
             }
         })
-        .then((res)=>{console.log("added policy")});
+        .then((res)=>{toast.success(res.data);
+                      setPolicy({"policyName":"",
+                                 "premiumAmount":"",
+                                  "validTo":"",
+                                  "userPolicyValidity":""});
+        })
+        
+        .catch((err)=>{console.log(err?.response?.data);
+                      let data = err?.response?.data;
+                      Object.values(data).forEach((val)=>{toast.error(val)})});
+
 
     }
 
@@ -45,7 +56,7 @@ function AddPolicy(){
 
                     <div className={styles.inputholder}>
                         <label htmlFor="validTo">Policy Vaidity Date</label>
-                        <input type="text" name="validTo" value={Policy.validTo} onChange={createPolicy} placeholder='validTo' required/>
+                        <input type="text" name="validTo" value={Policy.validTo} onChange={createPolicy} placeholder='YYYY-MM-DD' required/>
                     </div>
 
                     <div className={styles.inputholder}>

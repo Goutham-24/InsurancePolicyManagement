@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./Admin-css/table.module.css";
+import { toast } from "react-toastify";
 function AdminClaimView(){
     const [claim,setclaim] = useState([]);
 
@@ -25,9 +26,10 @@ function AdminClaimView(){
                 Authorization: `Bearer ${localStorage.getItem("keyToken")}`
             }
             })
-            .then((res)=>{console.log("Approved");
+            .then((res)=>{toast.success(res.data);
                       CustomerClaims();
-            });
+            })
+            .catch((err)=>{toast.error(err?.response?.data.Body)});
         }
         else if(status === "REJECT"){
             axios.put(`http://localhost:8089/AdminAccess/claim-Reject/${Id}`,{},{
@@ -35,9 +37,10 @@ function AdminClaimView(){
                 Authorization: `Bearer ${localStorage.getItem("keyToken")}`
             }
             })
-            .then((res)=>{console.log("Reject");
+            .then((res)=>{toast.success(res.data);
                       CustomerClaims();
-            });
+            })
+            .catch((err)=>{toast.error(err?.response?.data.Body)});
         }
     }
 
@@ -72,9 +75,10 @@ function AdminClaimView(){
                             <td><button className={styles.reject} onClick={()=>{ApproveOrRejectClaims(claims.claimId,"REJECT")} }>Reject</button></td>
                         </tr>
                     ))): (
-                        <td colSpan={8} style={{ textAlign: "center" }}>
+                        <tr><td colSpan={8} style={{ textAlign: "center" }}>
                             No Claim Available
                         </td>
+                        </tr>
                     )}
                 </tbody>
             </table>

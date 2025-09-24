@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import styles from "./customers-css/table.module.css";
+import { toast } from "react-toastify";
 function AllPolicies(){
 
     const [Policies,setPolicies] = useState([]);
@@ -23,13 +24,12 @@ function AllPolicies(){
             },
             responseType:"text"
         })
-        .then((res)=>{console.log("done")})
-        .catch((err)=> {console.error(err)})
+        .then((res)=>{toast.success(res.data)})
+        .catch((err)=> {toast.error(err.response.data)})
     }
 
     return(
         <>
-        <h2>All Policy place</h2>
         <br />
         <table className={styles.table}>
             <thead>

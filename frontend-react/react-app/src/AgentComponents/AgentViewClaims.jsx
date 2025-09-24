@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 import styles from "./Agent-css/froms.module.css";
+import { toast } from "react-toastify";
 
 function AgentViewClaims(){
     const Navigate = useNavigate();
@@ -29,7 +30,7 @@ function AgentViewClaims(){
                 Authorization: `Bearer ${localStorage.getItem("keyToken")}`
             }
         })
-        .then((res)=>{console.log("done approval");
+        .then((res)=>{toast.success(res.data);
                       allCustomerClaims();
         });
         }
@@ -40,7 +41,7 @@ function AgentViewClaims(){
                 Authorization: `Bearer ${localStorage.getItem("keyToken")}`
             }
         })
-        .then((res)=>{console.log("done reject");
+        .then((res)=>{toast.info(res.data);
                       allCustomerClaims();
         });
         }
@@ -77,9 +78,10 @@ function AgentViewClaims(){
                             <td><button className={styles.reject} onClick={()=>{ClaimApproveOrReject(claims.claimId,"REJECT")}}>Reject</button></td>
                         </tr>
                     ))):(
-                        <td colSpan="8" style={{ textAlign: "center" }}>
+                        <tr><td colSpan="8" style={{ textAlign: "center" }}>
                             No claims available
                         </td>
+                        </tr>
                     )
                     }
                 </tbody>

@@ -16,6 +16,9 @@ import com.project.creation.DTO.PolicyDetails;
 import com.project.creation.Model.Policy;
 import com.project.creation.Model.User;
 import com.project.creation.Service.AdminService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,7 +47,7 @@ public class AdminCon {
 
     @PostMapping("/AddPolicy")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<String> newPolicy(@RequestBody PolicyDetails policyDetails) {
+    public ResponseEntity<String> newPolicy(@Valid @RequestBody PolicyDetails policyDetails) {
         System.out.println(">>> admincall");
         return adminService.addPolicy(policyDetails);
     }

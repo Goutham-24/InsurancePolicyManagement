@@ -10,6 +10,8 @@ import com.project.creation.Model.Policy;
 import com.project.creation.Model.UserPolicy;
 import com.project.creation.Service.CustomerService;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +51,7 @@ public class CustomerCon {
 
     @PutMapping("/setProfile")
     @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
-    public ResponseEntity<String> profileCustomer(@RequestBody UserProfile profile) {
+    public ResponseEntity<String> profileCustomer(@Valid @RequestBody UserProfile profile) {
         return customerService.customerProfile(profile,getusername());
     }
 
@@ -66,7 +68,7 @@ public class CustomerCon {
     }
 
     @GetMapping("/getAllClaims")
-    public List<ClaimDto> getClaims() {
+    public List<?> getClaims() {
         return customerService.acquireClaims(getusername());
     }
     
@@ -77,7 +79,7 @@ public class CustomerCon {
     }
 
     @GetMapping("/MyPolicies")
-    public List<UserPolicyDto> getMyPolicies() {
+    public List<?> getMyPolicies() {
         return customerService.myPolicies(getusername());
     }
     

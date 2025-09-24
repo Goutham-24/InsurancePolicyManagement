@@ -3,6 +3,7 @@ import axios from "axios";
 import styles from "./Auth-css/Signup.module.css";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 function Signup(){
     const Navigate = useNavigate();
     const [credentials,setcredentials] = useState({
@@ -20,10 +21,17 @@ function Signup(){
         e.preventDefault();
 
         axios.post(`http://localhost:8089/Authentication/signup`,credentials)
-        .then((res)=>{alert("Successfully Added");
+        .then((res)=>{toast.success(res.data);
                      Navigate("/Login");
-              
-        });
+        })
+        .catch((err)=>{
+            
+            const store = err?.response?.data;
+            console.log(store.userEmailId);
+
+            Object.values(store).forEach(msg => {
+                toast.error(msg);
+            })});
     }
     return(
         <>
