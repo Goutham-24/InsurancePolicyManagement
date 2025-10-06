@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "insurance-policy-management.vercel.app")
 @RestController
 @RequestMapping("/AdminAccess")
 public class AdminCon {
